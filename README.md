@@ -19,8 +19,8 @@ Playing on hats being on your head, and right brain vs. left brain, we’ll map 
 ![2](https://github.com/user-attachments/assets/a00bf8b8-e736-44a1-a236-2e926b07f1d4)
 
 ## Version 2 - NMAH, Pantent Models
-Imagine each color corresponds with a part of speech (e.g. yellow = verb). You construct what you want by selecting from / spinning the spoked wheel (a replica of the SI brand mark). Construct a sentence (A [GOLD] [TYPEWRITER] for [WRITING POETRY]. 
 ![Untitled_Artwork 3](https://github.com/user-attachments/assets/d7ea2a19-d404-43ca-9d07-b3602787966e)
+Imagine each color corresponds with a part of speech (e.g. yellow = verb). You construct what you want by selecting from / spinning the spoked wheel (a replica of the SI brand mark). Construct a sentence (A [GOLD] [TYPEWRITER] for [WRITING POETRY]. 
 ![Untitled_Artwork 1](https://github.com/user-attachments/assets/b23c908c-a400-4b4c-ad87-bb5b331dd333)
 
 
