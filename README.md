@@ -2,8 +2,18 @@
 For Major Studio 1
 By: Katherine Chui and Josh Strupp
 
+# MOCKS
+<img width="1920" alt="Intro" src="https://github.com/user-attachments/assets/a235a5d5-19d1-483c-835f-56588d9f12d2">
+<img width="1920" alt="3D1" src="https://github.com/user-attachments/assets/53d161b4-6b59-4897-a79a-165f2e03df45">
+<img width="1920" alt="3D2" src="https://github.com/user-attachments/assets/cc03b8a4-72c0-4e37-bba8-b1bf3baa53c1">
+<img width="1920" alt="2D1" src="https://github.com/user-attachments/assets/926d35be-ef48-417a-8c34-fefec7cec234">
+<img width="1920" alt="2D2" src="https://github.com/user-attachments/assets/fd1fc4a8-9c5c-41be-ae7e-eb39251eea0f">
+<img width="1908" alt="Data Exploration" src="https://github.com/user-attachments/assets/0fa70d9c-b489-4c8a-91ee-b9749cc6a838">
 
-# HATS (NMAH)
+
+
+
+# SKETCHES
 ## Version 1
 ![3](https://github.com/user-attachments/assets/577e3c06-3063-4001-b1a8-6dfcd4585ae5)
 
