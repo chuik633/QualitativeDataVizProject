@@ -1,0 +1,210 @@
+@font-face {
+    font-family: Futura;
+    src: url("Futura.ttc");
+}
+
+*{
+    box-sizing: border-box;
+    color: black;
+    font-family: Futura;
+    margin: 0;
+    /* overflow: hidden;  */
+    
+ 
+}
+
+
+body{
+    background-color: red;
+    background-color: #F0F0EE;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+    /* overflow: hidden; */
+}
+::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+    background: transparent;
+    width: 0;
+}
+
+.header{
+    border-bottom: .8px solid black;
+    /* background-color: pink; */
+    padding: 20px;
+    position: fixed;
+    top:0px;
+    width: 100vw;
+    height: 60px;
+    z-index: 10;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+.header h1{
+    color: #000;
+    font-family: "IvyOra Display";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 1.86px;
+}
+
+.header h2{
+    color: #000;
+    text-align: right;
+    font-family: "Futura PT";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    letter-spacing: 1.32px;
+}
+
+svg{
+    background-color: #F0F0EE;
+    
+}
+
+
+#timeline-container{
+    position: fixed;
+    background-color: #F0F0EE;
+    top: 100px;
+}
+.x-axis .domain{
+   stroke: lightgray;
+}
+
+#date-label{
+    position: fixed;
+    z-index:6;
+    top: 80px;
+    font-family: "Futura PT";
+    font-size: 30px;
+    width: 100vw;
+    text-align: center;
+    pointer-events: none;
+ 
+    /* background-color: pink; */
+ 
+}
+
+
+.timeline-bar-svg{
+    top: 100px;
+    transform-origin: center;
+    position: fixed;
+    right: 0px;
+    background-color: none;
+}
+.timeline-bar-svg{
+    z-index: 5;
+}
+
+
+.bar{
+    fill: black;
+    transform-origin: right;
+    /* transition: width 0.5s ease; */
+}
+
+.bar.unselected{
+    height: .6px;
+}
+.bar.selected{
+    height: 2px;
+}
+
+
+
+.bar-text {
+    font-family: "Futura PT";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 300;
+    /* left: 5px; */
+    width: 50px;
+    height: 30px;
+}
+.shown {
+    display: inherit;
+}
+
+.hidden {
+    display: none;
+}
+
+
+ .scrolly {
+    height: 10000px;
+    width: 100vw;
+    background-color: none;
+    position: absolute;
+    pointer-events: none;
+ }
+
+
+#card {
+    position: fixed;
+    z-index: 10;
+    background: #F0F0EE;
+    border: 1px solid black;
+    padding: 20px;
+    font-family: "Futura PT";
+    font-weight: 300;
+    display: none;
+    flex-direction: row;
+    gap: 20px;
+    width: fit-content;
+}
+
+.card-info{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#card .field-container{
+    display: flex;
+    flex-direction: column;
+}
+#card .field-container .field-text{
+    font-family: "Futura PT";
+    font-weight: 300;
+    font-size: 10px;
+    /* max-width: 400px; */
+}
+#card .field-container .field-label{
+    font-family: "Futura PT";
+    font-weight: 500;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+}
+.card-colors {
+    display: flex;
+    flex-direction: row;
+    gap: 0px;
+    position: relative;
+    bottom: 0px;
+    align-self: flex-start;
+    justify-self: flex-end;
+}
+.card-image-container {
+    display: flex;
+    flex-direction:column;
+    gap: 10px;
+    
+}
+.card-colors{
+    display: flex;
+    gap: 2px;
+}
+#card .card-color{
+    width: 20px;
+    height: 20px;
+    
+}
