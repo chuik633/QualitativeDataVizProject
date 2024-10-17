@@ -2,6 +2,11 @@
 For Major Studio 1
 By: Katherine Chui and Josh Strupp
 
+# PROTOTYPE ITERATION 1
+<img width="1272" alt="Screenshot 2024-10-17 at 11 33 42 AM" src="https://github.com/user-attachments/assets/99563b2b-3c0d-44b0-a483-1f927815b2d8">
+<img width="1278" alt="Screenshot 2024-10-17 at 11 31 14 AM" src="https://github.com/user-attachments/assets/a5ec5d77-45e5-4d37-90d7-00935983689c">
+
+
 # MOCKS
 <img width="1920" alt="Intro" src="https://github.com/user-attachments/assets/a235a5d5-19d1-483c-835f-56588d9f12d2">
 <img width="1920" alt="3D1" src="https://github.com/user-attachments/assets/53d161b4-6b59-4897-a79a-165f2e03df45">
