@@ -16,16 +16,15 @@ const innerHeight = height - padding.top - padding.bottom
 const innerWidth = width - padding.left - padding.right
 
 function setup_color_timelines(color_data, dates){
-    const saturations = Object.values(color_data).flatMap(d_map=> {
-        return Object.values(d_map).map(d=>d.saturation)
-    })
-    console.log(saturations)
+    const all_x_vals = Object.values(color_data).flatMap(d_map=> Object.values(d_map).map(d=>d.x))
+    const all_y_vals = Object.values(color_data).flatMap(d_map=> Object.values(d_map).map(d=>d.y))
+    console.log("X", all_x_vals, all_y_vals)
     const xScale = d3.scaleLinear()  //colorful <--> b/w (SATURATION)
-        .domain([d3.min(saturations), d3.max(saturations)]) //TODO: can change the min max based on all the data 
+        .domain([d3.min(all_x_vals), d3.max(all_x_vals)]) //TODO: can change the min max based on all the data 
         .range([100, innerWidth-50])
  
     const yScale = d3.scaleLinear() //HUE
-        .domain([0,360])
+        .domain([d3.min(all_y_vals), d3.max(all_y_vals)])
         .range([100, innerHeight - 150])
 
     for(const date of dates){
@@ -69,46 +68,77 @@ function color_timeline(color_data, date,xScale,yScale){
             .selectAll('.tick').remove()
     //----------------------------------------------------------------------------------------
     //1. create force nodes using our data
-    const nodes = data.map(entry => {
+    let nodes = data.map(entry => {
         //load image to get the dimensions
         let img_width = 50
         let img_height = 30
-        //TODO: add aspect ratio stuff
-        // d3.image(entry.imageUrl).then(
-        //     (img) =>{
-        //         const aspect_ratio = img.naturalWidth / img.naturalHeight;
-        //         // const img_width = xScale.bandwidth()
-        //         img_width = 50
-        //         img_height = img_width/aspect_ratio          
-        //     }
-            
-        // )
         return {
             "entry": entry,
-            "x": xScale(entry.saturation),  
-            "y": yScale(entry.hue),
+            "x": xScale(entry.x),  
+            "y": yScale(entry.y),
             "img_width": img_width,
-            "img_height": img_height
+            "img_height": img_height,
+            'vibrant': entry.vibrant
         } 
             
     });
     // console.log('nodes',nodes)
+    nodes = data.map(entry =>{
+        return {
+        "entry": entry,
+        "x": xScale(entry.x),  
+        "y": yScale(entry.y),
+        "img_width": 50,
+        "img_height": 30,
+        'cluster':entry["K-means cluster"],
+        'vibrant': entry.vibrant,
+        'palete':[entry.vibrant, entry.muted, entry.darkVibrant, entry.darkMuted, entry.lightVibrant]
+    }
 
+    })
+    const cluster_groups = d3.group(
+        nodes,
+        d=>d.cluster
+    )
     
     function testCircles(){
-        svg.selectAll('circle')
-            .data(nodes)
-            .join('circle')
-            .attr('r', (d) => {
-                return d.img_width/2
+
+        // console.log("CLUSTERS")
+        // console.log(cluster_groups)
+        // console.log(Array.from(cluster_groups))
+        
+        svg.selectAll('g')
+            .data(Array.from(cluster_groups))
+            .join('g')
+            .attr('class', d=>{
+                // console.log("D1", d[1])
+                return "cluster c-"+d[0]
             })
-            .attr('cx', (d) => d.x)
-            .attr('cy', (d) => d.y)
-            .attr('fill', '#black')
+            .selectAll('circle')
+                .data(d=>{
+                    // console.log('d', d[1])
+                    return d[1]
+                })
+                .join('circle')
+                .attr('r', (d) => {
+                    return d.img_width/2
+                })
+                .attr('cx', (d) => d.x)
+                .attr('cy', (d) => d.y)
+                .attr('fill', (d)=>d.vibrant)
+                // .on("mouseover", function(event, d) {
+                //     const className = `.c-${d.cluster}`
+                //     d3.selectAll(".cluster").style("opacity",.5)
+                //     d3.selectAll(className).style("opacity",.9)
+                // })
+                // .on("mouseout", function() {
+                //     d3.selectAll(".cluster").style("opacity",1)
+                    
+                // });
     }
     function layoutImages() {
         svg.selectAll("image")
-            .data(nodes, d => d.entry.id)
+            .data(nodes)
             .join(
                 enter => enter.append("image")
                     .attr('href', d => d.entry.imageUrl)
@@ -145,8 +175,46 @@ function color_timeline(color_data, date,xScale,yScale){
             );
     }
 
-    layoutImages()
-    // testCircles()
+    function layoutColors(){
+        svg.selectAll("rect")
+        .data(nodes)
+        .join(
+            enter => enter.append("rect")
+                .attr('id', d => "color-"+String(d.entry.id))
+                .attr('class', d => String(d.entry.date))
+                .attr('x', d => d.x)
+                .attr('y', d => d.y)
+                .attr('fill', d=>d.entry.vibrant)
+                .attr('width', d => d.img_width)
+                .attr('height', d => d.img_height)
+                .on('mouseover', (event, d) => {
+                    d3.select(`#color-${String(d.entry.id)}`)
+                        .attr('opacity', 0.5);
+                })
+                .on('mouseout', (event, d) => {
+                    d3.select(`#color-${String(d.entry.id)}`)
+                        .attr('opacity', 1);
+                })
+                .on('mousedown', (event, d) => {
+                    d3.select(`#color-${String(d.entry.id)}`)
+                        .attr('opacity', 0.01);
+                })
+                .on('click', (event, d) => {
+                    show_card(d.entry, x, y);
+                    
+                }),
+            update => update
+                .attr('x', d => d.x)
+                .attr('y', d => d.y)
+                .attr('width', d => d.img_width),
+            exit => exit.remove()
+        );
+
+    }
+
+    // layoutImages()
+    // layoutColors()
+    testCircles()
     let activeNodes = [];
 
     // only activate the simulation for the active nodes
@@ -159,6 +227,7 @@ function color_timeline(color_data, date,xScale,yScale){
                 .alphaDecay(0.005)
                 .on("tick", () => {
                     nodes.forEach(d => {
+                        // console.log("TICK", d)
                         let leftBound = d.img_width/2
                         let rightBound = Math.min(innerWidth-d.img_width/2, d.x)
                         let topBound = d.img_height /2 + 50
@@ -167,8 +236,10 @@ function color_timeline(color_data, date,xScale,yScale){
                         d.y = Math.max(topBound,bottomBound);
                     });
             
-                    // testCircles(); 
-                    layoutImages()
+                    testCircles(); 
+                    // layoutImages()
+                    // layoutColors()
+                    
                 });
             sim.alpha(1).restart();
         }
@@ -178,9 +249,10 @@ function color_timeline(color_data, date,xScale,yScale){
     svg.on('mousemove', (event) => {
         const [mouseX, mouseY] = d3.pointer(event);
         activeNodes = nodes.filter(d => {
+            // console.log("DHEHR", d)
             const dx = d.x - mouseX;
             const dy = d.y - mouseY;
-            return Math.sqrt(dx * dx + dy * dy) < 200; 
+            return Math.sqrt(dx * dx + dy * dy) < 100; 
         });
         updateSimulation();
     });
@@ -189,25 +261,70 @@ function color_timeline(color_data, date,xScale,yScale){
     svg.on('mouseout', () => {
         activeNodes = []; 
     });
-
-
-
 }
 
 
-function show_card(entry){
+function show_card(entry, x,y){
     const img_height = 200
-    const card = d3.select("#card").style('display','flex')
+    const card = d3.select("#card")
+                    .attr('x', x)
+                    .attr('y', y)
+                    .style('left', `${x}px`)
+                    .style('top', `${y}px`);
     card.selectAll("*").remove() //clear the card
+    card.style('display','flex')
 
     let text_width_constraint = 200
-    
+   
+    const img_container = card.append('div').attr('class', 'card-image-container')
+    img_container.append('img')
+        .attr('width', 100)
+        .attr('height', 100)
+        .attr('class', 'card-image')
+        .attr('style', 'display:inherit')
 
+    const color_fields = ["hue","saturation",	"lightness"	,"vibrant",	"muted",	"darkVibrant"	,"darkMuted",	"lightVibrant" ]  
+    const colors_palette = img_container.append('div').attr("class", 'card-colors')    
+    for(const color_field of color_fields){
+        const color = entry[color_field]
+        // console.log("color", color)
+        if (String(color).includes('#')){
+            colors_palette.append('div').attr("class", 'card-color').style('background', color)
+        }else{
+            console.log('color empty')
+        }
+        
+    }
+
+    const info_container = card.append('div').attr("class", 'card-info')
+    info_container.append('text')
+        .attr('class', 'card-title')
+        .text(entry.title)
+
+
+    const fields = ["date", "physicalDescription", "topic", "notes"]
+    for(const field of fields){
+        const field_container = info_container.append('div').attr("class", 'field-container')
+        field_container.append("text")
+                .text(field)
+                .attr("class", 'field-label')
+        field_container.append("text")
+                .text(entry[field])
+                .attr("class", 'field-text')
+    }
+    
     d3.image(entry.imageUrl).then(
         (img) =>{
+            console.log(img)
+            const image = d3.select('.card-image').attr('src', img.src)
+
             const aspect_ratio = img.naturalWidth / img.naturalHeight;
             const img_width = img_height*aspect_ratio
-           
+
+            image.attr('width', img_width).attr('height', img_height)
+            
+
+            //text width stuff
             if(aspect_ratio>1.1){ //if width is too big  compared to the height
                 card.style('flex-direction', 'column')
                 text_width_constraint = img_width
@@ -215,51 +332,16 @@ function show_card(entry){
                 card.style('flex-direction', 'row')
                 text_width_constraint = 200
             }
-        const img_container = card.append('div').attr('class', 'card-image-container')
-        img_container.append('img')
-            .attr('src', entry.imageUrl)
-            .attr('class', 'card-image')
-            .attr('style', 'display:inherit')
-            .attr('width', img_width) 
-            .attr('height', img_height)
 
-        const color_fields = ["hue","saturation",	"lightness"	,"vibrant",	"muted",	"darkVibrant"	,"darkMuted",	"lightVibrant" ]  
-        const colors_palette = img_container.append('div').attr("class", 'card-colors')    
-        for(const color_field of color_fields){
-            const color = entry[color_field]
-            // console.log("color", color)
-            if (String(color).includes('#')){
-                colors_palette.append('div').attr("class", 'card-color').style('background', color)
-            }else{
-                console.log('color empty')
-            }
+            card.selectAll('.field-text').style('display','flex').style('max-width', text_width_constraint + "px")
+
             
-        }
-
-        const info_container = card.append('div').attr("class", 'card-info')
-        info_container.append('text')
-            .attr('class', 'card-title')
-            .text(entry.title)
-
-      
-        const fields = ["date", "physicalDescription", "topic", "notes"]
-        for(const field of fields){
-            const field_container = info_container.append('div').attr("class", 'field-container')
-            field_container.append("text")
-                    .text(field)
-                    .attr("class", 'field-label')
-            field_container.append("text")
-                    .text(entry[field])
-                    .attr("class", 'field-text')
-        }
-        card.selectAll('.field-text').style('max-width', text_width_constraint + "px")
-
        
      })
 
-     card.on('mouseout', ()=>{
-        d3.select("#card").style('display','none')
-     })
+    //  card.on('mouseout', ()=>{
+    //     d3.select("#card").style('display','none')
+    //  })
 }
 
 

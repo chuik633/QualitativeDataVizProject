@@ -111,9 +111,11 @@ svg{
 }
 
 .bar.unselected{
-    height: .6px;
+    height: 1px;
+    fill: rgb(186, 179, 179);
 }
 .bar.selected{
+    fill: black;
     height: 2px;
 }
 
@@ -208,3 +210,80 @@ svg{
     height: 20px;
     
 }
+
+#params-container{
+    position: fixed;
+    top: 100px;
+    left: 20px;
+    z-index: 6;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#params-container form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#params-container label span{
+    color: #000;
+    font-family: "Futura PT";
+    font-size: 8.5px;
+    font-weight: 100;
+    letter-spacing: 0.72px;
+
+
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+
+
+#params-container h2 {
+    color: #000;
+    font-family: "Futura PT";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    letter-spacing: 0.96px;
+    text-transform: uppercase;
+}
+
+.radio-custom input[type="radio"] {
+    display: none; 
+}
+.radio-custom::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    
+    border: .5px solid black;
+    border-radius: 50%;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+
+
+.radio-custom input[type="radio"]:checked + .radio-custom::before {
+    background-color: #4CAF50; /* Change background when selected */
+    border-color: #4CAF50; /* Change border color when selected */
+}
+
+.radio-custom input[type="radio"]:checked + span::after {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: black; 
+    border-radius: 50%;
+    position: relative;
+    top: 0px;
+    left: -50px;
+
+}
+
+

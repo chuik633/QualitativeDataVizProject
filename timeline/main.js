@@ -1,8 +1,8 @@
 //---------------------------------------------------------------------------------------------------------
 //                                          DATA LOADING + PROCESSING
 //---------------------------------------------------------------------------------------------------------
-const raw_data_url = "expanded_hats_Oct16.csv"
-// const raw_data_url = "smaller.csv"
+const raw_data_url = "data/expanded_hats_Oct20_noCards_with_clusters.csv"
+// const raw_data_url = "data/smaller.csv"
 let raw_data = []
 let color_data;
 const date_buckets = {
@@ -35,6 +35,8 @@ d3.csv(raw_data_url).then(data => {
         d['date'] = parsedDate
         d['date_bucket'] = getDateBucket(parsedDate)
         d['imageUrl'] = d['image']
+        d['x'] =  parseFloat(d['x value'])
+        d['y'] =  parseFloat(d['y value'])
 
         raw_data.push(d);
     });
@@ -55,9 +57,10 @@ d3.csv(raw_data_url).then(data => {
 
 
     console.log("Color Data:", color_data);
-    console.log("Color Data Object:", color_data_object[1860]);
-    
-
+    // console.log("Color Data Object:", color_data_object[1860]);
+    // const test_entry = color_data_object[1860][18]
+    // console.log(test_entry)
+    // show_card(test_entry, 300,200)
     setup_color_timelines(color_data_object, dates)
     window.addEventListener('scroll', () => {
         changeDate(dates, color_data_object)});
