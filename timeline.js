@@ -84,15 +84,12 @@ function color_timeline(color_data, date,xScale,yScale){
     });
     // console.log('nodes',nodes)
     nodes = data.map(entry =>{
-        // const aspect_ratio = img.naturalWidth / img.naturalHeight;
-        // const img_width = img_height*aspect_ratio
-
         return {
         "entry": entry,
         "x": xScale(entry.x),  
         "y": yScale(entry.y),
         "img_width": 50,
-        "img_height": 50,
+        "img_height": 30,
         'cluster':entry["K-means cluster"],
         'vibrant': entry.vibrant,
         'palete':[entry.vibrant, entry.muted, entry.darkVibrant, entry.darkMuted, entry.lightVibrant]
@@ -104,7 +101,12 @@ function color_timeline(color_data, date,xScale,yScale){
         d=>d.cluster
     )
     
-    function testCircles(){      
+    function testCircles(){
+
+        // console.log("CLUSTERS")
+        // console.log(cluster_groups)
+        // console.log(Array.from(cluster_groups))
+        
         svg.selectAll('g')
             .data(Array.from(cluster_groups))
             .join('g')
@@ -141,11 +143,10 @@ function color_timeline(color_data, date,xScale,yScale){
                 enter => enter.append("image")
                     .attr('href', d => d.entry.imageUrl)
                     .attr('id', d => String(d.entry.id))
-                    .attr('class', d => String(d.entry.date) + " svg-image")
+                    .attr('class', d => String(d.entry.date))
                     .attr('x', d => d.x)
                     .attr('y', d => d.y)
                     .attr('width', d => d.img_width)
-                    .attr('height', d => d.img_height)
                     .on('mouseover', (event, d) => {
                         d3.select(`#${String(d.entry.id)}`)
                             .attr('opacity', 0.8);
@@ -159,7 +160,6 @@ function color_timeline(color_data, date,xScale,yScale){
                             .attr('opacity', 0.1);
                     })
                     .on('click', (event, d) => {
-                        console.log('click')
                         show_card(d.entry);
                         d3.select("#card")
                             .attr('x', d.x)
@@ -181,23 +181,28 @@ function color_timeline(color_data, date,xScale,yScale){
         .join(
             enter => enter.append("rect")
                 .attr('id', d => "color-"+String(d.entry.id))
-                .attr('class', d => String(d.entry.date)+ ' color-block')
+                .attr('class', d => String(d.entry.date))
                 .attr('x', d => d.x)
                 .attr('y', d => d.y)
-                .attr('faded', false)
                 .attr('fill', d=>d.entry.vibrant)
                 .attr('width', d => d.img_width)
                 .attr('height', d => d.img_height)
-                .on('click', (event, d) => {
-                    console.log('click')
-                    show_card(d.entry);
-                    d3.select("#card")
-                        .attr('x', d.x)
-                        .attr('y', d.y)
-                        .style('left', `${d.x}px`)
-                        .style('top', `${d.y}px`);
+                .on('mouseover', (event, d) => {
+                    d3.select(`#color-${String(d.entry.id)}`)
+                        .attr('opacity', 0.5);
                 })
-               ,
+                .on('mouseout', (event, d) => {
+                    d3.select(`#color-${String(d.entry.id)}`)
+                        .attr('opacity', 1);
+                })
+                .on('mousedown', (event, d) => {
+                    d3.select(`#color-${String(d.entry.id)}`)
+                        .attr('opacity', 0.01);
+                })
+                .on('click', (event, d) => {
+                    show_card(d.entry, x, y);
+                    
+                }),
             update => update
                 .attr('x', d => d.x)
                 .attr('y', d => d.y)
@@ -207,68 +212,9 @@ function color_timeline(color_data, date,xScale,yScale){
 
     }
 
-    layoutImages()
-    layoutColors()
-
-    // //handle image loading
-    // d3.selectAll('.svg-image').each(function() {
-    //     const svgImage = d3.select(this); // Current image selection
-    //     svgImage.on('load', function() {
-    //         const img_width = this.width.baseVal.value;  // Get the width
-    //         const img_height = this.height.baseVal.value; // Get the height
-    //         console.log(`SVG Image Width: ${img_width}, SVG Image Height: ${img_height}`);
-    //     });
-
-    //     // Check if the image is already loaded (cached)
-    //     if (this.complete) {
-    //         const img_width = this.width.baseVal.value;
-    //         const img_height = this.height.baseVal.value;
-    //         cconsole.log(`COMPLETE: ${img_width}, SVG Image Height: ${img_height}`);
-    //     }
-    // });
-
-    function fade_nearby_color_blocks(mouseX, mouseY){
-        console.log(mouseY)
-
-        const color_blocks = svg
-            .selectAll(".color-block")
-            
-        for(const block of color_blocks){
-            if(block.faded == "true"){
-                continue
-            }
-            
-            const rect = block.getBoundingClientRect();
-            const x_center = rect.left + rect.width/2
-            const y_center = rect.top + rect.height/2
-
-            // d3.select("#tooltip").style("top", `${y_center}px`).style("left", `${x_center}px`)
-            // d3.select("#tooltip").style("top", `${mouseY}px`).style("left", `${mouseX}px`)
-
-            const dx = Math.abs(x_center-mouseX)
-            const dy = Math.abs(y_center-mouseY)
-            
-            const distance = Math.sqrt(dx**2 + dy**2)
-            
-            const insideRect = (
-                mouseX>= rect.left && mouseX <=rect.right 
-                && mouseY >= rect.top && mouseY <=rect.bottom
-            );
-
-            const detection_threshold = 100
-            let opacity = Math.max(0, distance/detection_threshold)
-            if (insideRect){
-                opacity = 0
-                block.faded = "true"
-            }
-            
-            block.style.opacity = opacity
-         
-        }
-      
-
-    }
-    // testCircles()
+    // layoutImages()
+    // layoutColors()
+    testCircles()
     let activeNodes = [];
 
     // only activate the simulation for the active nodes
@@ -290,9 +236,9 @@ function color_timeline(color_data, date,xScale,yScale){
                         d.y = Math.max(topBound,bottomBound);
                     });
             
-                    // testCircles(); 
-                    layoutImages()
-                    layoutColors()
+                    testCircles(); 
+                    // layoutImages()
+                    // layoutColors()
                     
                 });
             sim.alpha(1).restart();
@@ -301,10 +247,7 @@ function color_timeline(color_data, date,xScale,yScale){
 
    //only move when near
     svg.on('mousemove', (event) => {
-        let [mouseX, mouseY] = d3.pointer(event);
-        console.log("Y", mouseY, mouseY + window.screenY, event.screenY)
-        mouseY +=100
-        fade_nearby_color_blocks(mouseX, mouseY)
+        const [mouseX, mouseY] = d3.pointer(event);
         activeNodes = nodes.filter(d => {
             // console.log("DHEHR", d)
             const dx = d.x - mouseX;
@@ -312,7 +255,6 @@ function color_timeline(color_data, date,xScale,yScale){
             return Math.sqrt(dx * dx + dy * dy) < 100; 
         });
         updateSimulation();
-        
     });
 
     //clear when not near
