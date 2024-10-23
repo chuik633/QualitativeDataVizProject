@@ -1,1 +1,13 @@
 .DS_Store
+# Ignore node_modules in all directories
+node_modules/
+
+# Optional: Ignore environment variables file
+.env
+
+# Optional: Ignore log files
+*.log
+
+# Optional: Ignore build directories
+dist/
+build/
