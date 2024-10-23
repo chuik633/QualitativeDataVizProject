@@ -64,6 +64,20 @@ d3.csv(raw_data_url).then(data => {
     setup_color_timelines(color_data_object, dates)
     window.addEventListener('scroll', () => {
         changeDate(dates, color_data_object)});
+
+
+    //select options
+    const display_options = document.querySelectorAll('input[name="display-options"]');
+    set_display_mode('reveal')
+    for(const display_option of display_options){
+        display_option.addEventListener('change', ()=>{
+            const selected_option =display_option.value
+            console.log(selected_option)
+            set_display_mode(selected_option)
+        })
+
+    }
+
 });
 
 

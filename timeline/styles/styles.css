@@ -67,6 +67,17 @@ svg{
     
 }
 
+.timeline-svg{
+    opacity: 0;
+    transition: opacity 1s ease !important;
+    visibility: hidden;
+}
+
+.timeline-svg.visible{
+    opacity: 1;
+    display: inherit;
+    visibility: visible; 
+}
 
 #timeline-container{
     position: fixed;
@@ -252,45 +263,52 @@ svg{
     text-transform: uppercase;
 }
 
-.radio-custom input[type="radio"] {
-    display: none; 
+
+
+input[type="radio"] {
+    display: none; /* Hide the native radio button */
 }
-.radio-custom::before {
-    content: '';
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    
-    border: .5px solid black;
-    border-radius: 50%;
-    transition: background-color 0.3s, border-color 0.3s;
+label.radio-custom{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 }
 
-
-
-.radio-custom input[type="radio"]:checked + .radio-custom::before {
-    background-color: #4CAF50; /* Change background when selected */
-    border-color: #4CAF50; /* Change border color when selected */
+.color-block{
+    pointer-events: none;
 }
 
-.radio-custom input[type="radio"]:checked + span::after {
-    content: '';
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    background: black; 
-    border-radius: 50%;
-    position: relative;
-    top: 0px;
-    left: -50px;
+.radio-value{
+    font-size: 8px;
+    font-weight: 100;
+    font-family: "Futura PT"
+}
 
+.radio-button {
+    display:flex;
+    cursor: pointer;
+    width: 10px;
+    height: 10px;
+    border:.8px solid black;
+    border-radius: 20px;
+}
+
+/* Change the color when the radio button is checked */
+input[type="radio"]:checked + .radio-button {
+    background-color: black;
 }
 
 
-#tooltip{
+
+
+#tooltip, #tooltip2{
     position: fixed;
     z-index: 20;
     background-color: red;
     width: 20px;
     height: 20px;
+}
+
+#tooltip2{
+    background-color: yellow;
 }

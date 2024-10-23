@@ -19,20 +19,30 @@
   </div>
   <div id = 'params-container'>
     <h2>Display</h2>
-    <form id = "display-options">
+    <form id = "display-options" >
+      <label class="radio-custom">
+        <input type="radio" name="display-options" value="reveal" checked> 
+        <span class = "radio-button"></span>
+        <div class = "radio-value">Reveal</div>
+    </label>
       <label class="radio-custom">
         <input type="radio" name="display-options" value="images"> 
-        <span>Images</span>
+        <span class = "radio-button"></span>
+        <div class = "radio-value">Images</div>
+        
     </label>
-    <label class="radio-custom">
-      <input type="radio" name="display-options"  value="colors"> 
-      <span>Colors</span>
-  </label>
+      <label class="radio-custom">
+        <input type="radio" name="display-options"  value="colors"> 
+        <span class = "radio-button"></span>
+          <div class = "radio-value">Colors</div>
+    </label>
+  </form>
 
   </div>
   
-  </form>
+  
   <div id = 'tooltip'></div>
+  <div id = 'tooltip2'></div>
 
   <div id="date-label">Date Label</div>
   <div id = "timeline-container"></div>
@@ -40,8 +50,12 @@
   <div id ='card' class = "hidden"></div>
 
   <div class = "scrolly"></div>
+
+
   <script src = "main.js"></script>
   <script src = "timeline.js"></script>
+  <script src = "image_updating.js"></script>
+  <script src = "date_selection.js"></script>
 
  
   
