@@ -67,13 +67,13 @@ function color_timeline(color_data, date, xScale, yScale) {
     .attr("class", `timeline-svg hidden`)
     .style("border", "none");
   //place in the axis
-  svg
-    .append("g")
-    .attr("transform", `translate(0, ${innerHeight / 2})`)
-    .attr("class", "x-axis")
-    .call(d3.axisBottom(xScale))
-    .selectAll(".tick")
-    .remove();
+  // svg
+  //   .append("g")
+  //   .attr("transform", `translate(0, ${innerHeight / 2})`)
+  //   .attr("class", "x-axis")
+  //   .call(d3.axisBottom(xScale))
+  //   .selectAll(".tick")
+  //   .remove();
   //----------------------------------------------------------------------------------------
   //1. create force nodes using our data
   let nodes = data.map((entry) => {
