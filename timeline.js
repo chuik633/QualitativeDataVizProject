@@ -38,10 +38,9 @@ function setup_color_timelines(color_data, dates) {
   for (const date of dates) {
     color_timeline(color_data, date, xScale, yScale);
   }
-  d3.select(`#timeline-${String(dates[0])}`).attr(
-    "class",
-    "timeline-svg shown"
-  );
+  d3.select(`#timeline-${String(dates[0])}`)
+    .attr("class", "timeline-svg visible")
+    .style("display", "inherit");
 }
 
 function color_timeline(color_data, date, xScale, yScale) {
