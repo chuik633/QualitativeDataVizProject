@@ -119,6 +119,8 @@ html {
 .loading-button:hover {
   background-color: #fff;
   color: #000;
+  transition: box-shadow 0.3s ease;
+  box-shadow: none;
 }
 
 /* Photo styles */

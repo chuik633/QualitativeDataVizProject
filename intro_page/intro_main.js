@@ -35,7 +35,7 @@
   loadingBarFill.className = "loading-bar-fill";
   loadingBar.appendChild(loadingBarFill);
 
-  let loadingDuration = 10000; // 10 seconds
+  let loadingDuration = 20000; // 20 seconds
   let startTime = null;
 
   function animateLoadingBar(timestamp) {
