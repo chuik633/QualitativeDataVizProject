@@ -1,4 +1,49 @@
 (function () {
+  // Define the path to your CSV data
+  const raw_data_url = "data/expanded_hats_Oct20_noCards_with_clusters.csv";
+
+  let imageUrls = [];
+
+  // Load the data and extract image URLs
+  d3.csv(raw_data_url).then((data) => {
+    data.forEach((d) => {
+      d["imageUrl"] = d["image"];
+      imageUrls.push(d.imageUrl);
+    });
+
+    // Now that imageUrls is populated, start preloading
+    preloadImages(imageUrls, () => {
+      console.log("All images preloaded");
+      // Proceed with other initialization if needed
+    });
+  });
+
+  function preloadImages(urls, callback) {
+    let loadedCount = 0;
+    const total = urls.length;
+
+    if (total === 0) {
+      callback();
+      return;
+    }
+
+    urls.forEach((url) => {
+      const img = new Image();
+      img.src = url;
+      img.onload = img.onerror = () => {
+        loadedCount++;
+        if (loadedCount === total) {
+          callback();
+        }
+      };
+    });
+  }
+
+  // In intro_main.js or wherever the intro page is initialized
+  preloadImages(imageUrls, () => {
+    console.log("All images preloaded");
+  });
+
   // Rotating Hero Text
   const heroTexts = [
     "Each a sign of status, rank, and religion.",

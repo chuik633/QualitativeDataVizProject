@@ -38,6 +38,24 @@ d3.csv(raw_data_url).then((data) => {
     raw_data.push(d);
   });
 
+  const imageUrls = raw_data.map((d) => d.imageUrl);
+
+  // function preloadImages(urls, callback) {
+  //   let loadedCount = 0;
+  //   const total = urls.length;
+
+  //   urls.forEach((url) => {
+  //     const img = new Image();
+  //     img.src = url;
+  //     img.onload = img.onerror = () => {
+  //       loadedCount++;
+  //       if (loadedCount === total) {
+  //         callback();
+  //       }
+  //     };
+  //   });
+  // }
+
   console.log("RAW DATA:", raw_data);
 
   // Extract unique materials
@@ -72,7 +90,7 @@ d3.csv(raw_data_url).then((data) => {
   const display_options = document.querySelectorAll(
     'input[name="display-options"]'
   );
-  set_display_mode("reveal");
+  set_display_mode("colors");
   for (const display_option of display_options) {
     display_option.addEventListener("change", () => {
       const selected_option = display_option.value;

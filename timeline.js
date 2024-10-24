@@ -50,6 +50,23 @@ function color_timeline(color_data, date, xScale, yScale) {
   if (data.length > cap) {
     data = data.slice(0, cap);
   }
+
+  // Define minimum and maximum image sizes
+  const minSize = 20; // Adjust as needed
+  const maxSize = 100; // Adjust as needed
+
+  // Calculate image size based on the number of hats
+  const maxHats = 80; // The number at which images are at minimum size
+  let imageSize;
+  if (data.length >= maxHats) {
+    imageSize = minSize;
+  } else {
+    const sizeScale = d3
+      .scaleLinear()
+      .domain([1, maxHats])
+      .range([maxSize, minSize]);
+    imageSize = sizeScale(data.length);
+  }
   //create the svg
   const container = d3
     .select("#timeline-container")
@@ -57,6 +74,7 @@ function color_timeline(color_data, date, xScale, yScale) {
     .style("height", `${height}px`);
   // .style("background-color", `lightgray`)
   // container.selectAll("*").remove()
+
   const svg = container
     .append("svg")
     .attr("viewBox", [0, 0, innerWidth, innerHeight])
@@ -76,13 +94,14 @@ function color_timeline(color_data, date, xScale, yScale) {
   //   .remove();
   //----------------------------------------------------------------------------------------
   //1. create force nodes using our data
+
   let nodes = data.map((entry) => {
     return {
       entry: entry,
       x: xScale(entry.x),
       y: yScale(entry.y),
-      img_width: 40,
-      img_height: 40,
+      img_width: imageSize,
+      img_height: imageSize,
       cluster: entry["K-means cluster"],
       vibrant: entry.vibrant,
       palete: [
