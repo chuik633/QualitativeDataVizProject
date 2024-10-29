@@ -128,9 +128,18 @@
     img.src = `intro_page/intro_images/${i + 1}.jpg`;
     img.style.width = "8%";
     img.className = "photo";
-    // Random position on y-axis
-    img.style.top = Math.random() * 100 + "%";
-    // Random z-index to place some photos in front or behind the hero text
+
+    // Scatter images across the entire viewport width and height
+    img.style.top = Math.random() * 150 + "%";
+    img.style.left = Math.random() * 1000 + "%";
+
+    // Start with opacity 0
+    img.style.opacity = 0;
+
+    // Add transition for fade-in effect
+    img.style.transition = "opacity 1s ease-in";
+
+    // Rest of the existing styling
     const topPosition = parseFloat(img.style.top);
     const middleStripTop = window.innerHeight / 2 - 20;
     const middleStripBottom = window.innerHeight / 2 + 20;
@@ -139,31 +148,22 @@
     } else {
       img.style.zIndex = Math.random() < 0.8 ? 5 : 15;
     }
-    // Random speed
+
     img.dataset.speed = 0.02 + Math.random() * 0.4;
-    // Random size
     const scale = 0.3 + Math.random() * 1.5;
     img.style.transform = `scale(${scale})`;
-    // Random opacity
-    img.style.opacity = scale < 1 ? 0.5 : 1;
-    // Blurry if further away
+
     if (scale < 1) {
       img.style.filter = "blur(2px)";
     }
-    // Light drop shadow with random opacity and spread
-    // const shadowOpacity = 0.1 + Math.random() * 0.2;
-    // const shadowSpread = 2 + Math.random() * 1;
-    // const shadowDistanceX = Math.random() * 10 - 5; // Random distance between -5 and 5
-    // // const shadowDistanceY = Math.random() * 10 - 5; // Random distance between -5 and 5
-    // // img.style.boxShadow = `${shadowDistanceX}px ${shadowDistanceY}px ${shadowSpread}px rgba(0, 0, 0, ${shadowOpacity})`;
-    // img.style.boxShadow = `${shadowDistanceX}px ${shadowSpread}px rgba(0, 0, 0, ${shadowOpacity})`;
 
-    // Starting position
-    // Random starting x position between -500px and -100px
-    const startX = -500 + Math.random() * 400;
-    img.style.left = startX + "px";
     photoGallery.appendChild(img);
     photos.push(img);
+
+    // Fade in after a small random delay
+    setTimeout(() => {
+      img.style.opacity = scale < 1 ? 0.5 : 1;
+    }, Math.random() * 2000); // Random delay up to 2 seconds
   }
 
   // Animate the photos
