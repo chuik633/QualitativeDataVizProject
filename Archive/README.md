@@ -2,6 +2,25 @@
 For Major Studio 1
 By: Katherine Chui and Josh Strupp
 
+# 2nd Proto - Presentation Screen Shots
+<img width="1020" alt="Screenshot 2024-10-24 at 11 54 04 AM" src="https://github.com/user-attachments/assets/ce386689-fa88-44bb-b9ca-cbe9cea35430">
+<img width="1023" alt="Screenshot 2024-10-24 at 11 54 10 AM" src="https://github.com/user-attachments/assets/8f9816a8-383a-4248-97e7-33217490a555">
+<img width="1296" alt="Screenshot 2024-10-24 at 11 54 29 AM" src="https://github.com/user-attachments/assets/006f7fe5-8f4a-4c8c-a6df-eb0c1490390d">
+<img width="1295" alt="Screenshot 2024-10-24 at 11 54 38 AM" src="https://github.com/user-attachments/assets/1ac5c7b5-f9e3-47fa-a2cd-fe7b9d051626">
+
+
+
+
+# Prototype Links & Info
+Figma Prototype: https://www.figma.com/proto/5Q6Ou1vIhIAnmjNSbICMLa/%5BMSDV%5D-SI-Qual-Project?page-id=298%3A183&node-id=329-1167&node-type=frame&viewport=400%2C369%2C0.06&t=VPXXpBg2VS9WRp13-1&scaling=scale-down&content-scaling=fixed
+
+https://github.com/user-attachments/assets/21ac1a52-fd49-40c8-af38-c508225db719
+
+<img width="957" alt="image" src="https://github.com/user-attachments/assets/e502d5b8-140a-4006-add7-6dba860e077e">
+
+
+
+
 # MOCKS
 <img width="1920" alt="Intro" src="https://github.com/user-attachments/assets/a235a5d5-19d1-483c-835f-56588d9f12d2">
 <img width="1920" alt="3D1" src="https://github.com/user-attachments/assets/53d161b4-6b59-4897-a79a-165f2e03df45">
