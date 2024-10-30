@@ -1,0 +1,365 @@
+@font-face {
+  font-family: Futura;
+  src: url("Futura.ttc");
+}
+
+* {
+  box-sizing: border-box;
+  color: black;
+  font-family: Futura;
+  margin: 0;
+  /* overflow: hidden;  */
+}
+
+body {
+  background-color: red;
+  background-color: #f0f0ee;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+  /* overflow: hidden; */
+}
+::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+  background: transparent;
+  width: 0;
+}
+
+.header {
+  border-bottom: 0.8px solid black;
+  /* background-color: pink; */
+  padding: 20px;
+  position: fixed;
+  top: 0px;
+  width: 100vw;
+  height: 60px;
+  z-index: 10;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.header h1 {
+  color: #000;
+  font-family: "IvyOra Display";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 1.86px;
+}
+
+.header h2 {
+  color: #000;
+  text-align: right;
+  font-family: "Futura PT";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  letter-spacing: 1.32px;
+}
+
+svg {
+  background-color: #f0f0ee;
+}
+
+.timeline-svg {
+  opacity: 0;
+  transition: opacity 1s ease !important;
+  position: absolute;
+  /* visibility: hidden; */
+}
+
+.timeline-svg.visible {
+  opacity: 1;
+  display: inherit;
+  visibility: visible;
+}
+
+#timeline-container {
+  position: fixed;
+  background-color: #f0f0ee;
+  top: 100px;
+}
+.x-axis .domain {
+  stroke: lightgray;
+}
+
+#date-label {
+  position: fixed;
+  z-index: 6;
+  top: 80px;
+  font-family: "Futura PT";
+  font-size: 30px;
+  width: 100vw;
+  text-align: center;
+  pointer-events: none;
+
+  /* background-color: pink; */
+}
+
+.timeline-bar-svg {
+  top: 100px;
+  transform-origin: center;
+  position: fixed;
+  right: 0px;
+  background-color: none;
+}
+.timeline-bar-svg {
+  z-index: 5;
+}
+
+.bar {
+  fill: black;
+  transform-origin: right;
+  /* transition: width 0.5s ease; */
+}
+
+.bar.unselected {
+  height: 1px;
+  fill: rgb(186, 179, 179);
+}
+.bar.selected {
+  fill: black;
+  height: 2px;
+}
+
+.bar-text {
+  font-family: "Futura PT";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 300;
+  /* left: 5px; */
+  width: 50px;
+  height: 30px;
+}
+.shown {
+  display: inherit;
+}
+
+.hidden {
+  display: none;
+}
+
+.scrolly {
+  height: 10000px;
+  width: 100vw;
+  background-color: none;
+  position: absolute;
+  pointer-events: none;
+}
+
+#scroll-line {
+  position: fixed;
+  right: 0px;
+  height: 1px;
+  width: 30px;
+  background-color: rgb(186, 179, 179);
+  z-index: 10;
+}
+#scroll-line-text {
+  position: fixed;
+  right: 0px;
+  height: 1px;
+  width: 30px;
+  z-index: 10;
+  font-size: 8px;
+  font-family: "Futura PT";
+  font-weight: 100;
+  color: rgb(186, 179, 179);
+}
+
+#card {
+  position: fixed;
+  z-index: 10;
+  background: #f0f0ee;
+  border: 1px solid black;
+  padding: 20px;
+  font-family: "Futura PT";
+  font-weight: 300;
+  display: none;
+  flex-direction: row;
+  gap: 20px;
+  width: fit-content;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#card .field-container {
+  display: flex;
+  flex-direction: column;
+}
+#card .field-container .field-text {
+  font-family: "Futura PT";
+  font-weight: 300;
+  font-size: 10px;
+  overflow-y: auto;
+  max-height: 100px;
+  /* max-width: 400px; */
+}
+#card .field-container .field-label {
+  font-family: "Futura PT";
+  font-weight: 500;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.card-colors {
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  position: relative;
+  bottom: 0px;
+  align-self: flex-start;
+  justify-self: flex-end;
+}
+.card-image-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.card-colors {
+  display: flex;
+  gap: 2px;
+}
+#card .card-color {
+  width: 20px;
+  height: 20px;
+}
+
+#params-container {
+  position: fixed;
+  top: 100px;
+  left: 20px;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#params-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#params-container label span {
+  color: #000;
+  font-family: "Futura PT";
+  font-size: 8.5px;
+  font-weight: 100;
+  letter-spacing: 0.72px;
+
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+#params-container h2 {
+  color: #000;
+  font-family: "Futura PT";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  letter-spacing: 0.96px;
+  text-transform: uppercase;
+}
+
+input[type="radio"] {
+  display: none; /* Hide the native radio button */
+}
+label.radio-custom {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.color-block {
+  pointer-events: none;
+}
+
+.radio-value {
+  font-size: 8px;
+  font-weight: 100;
+  font-family: "Futura PT";
+}
+
+.radio-button {
+  display: flex;
+  cursor: pointer;
+  width: 10px;
+  height: 10px;
+  border: 0.8px solid black;
+  border-radius: 20px;
+}
+
+/* Change the color when the radio button is checked */
+input[type="radio"]:checked + .radio-button {
+  background-color: black;
+}
+
+/* Position the dropdown opposite the params-container */
+#material-dropdown {
+  position: fixed;
+  z-index: 20;
+  top: 10%;
+  right: 5%; /* Adjust this value as needed */
+}
+
+.material-dropdown {
+  width: 200px;
+  height: 40px;
+  border: 1px solid #000;
+  background-color: #000;
+  color: #fff;
+  font-family: "Darker Grotesque", sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  position: absolute;
+  /* Positioning will be adjusted later */
+  box-shadow: -10px 10px 0px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 3px;
+  /* appearance: none; Remove default dropdown styling */
+}
+
+.material-dropdown:hover {
+  background-color: #fff;
+  color: #000;
+  transition: box-shadow 0.3s ease;
+  box-shadow: none;
+}
+
+/* Optional: Style the dropdown arrow */
+.material-dropdown::after {
+  content: "";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  margin-top: -2px;
+  border-top: 5px solid #fff;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  pointer-events: none;
+}
+
+/* 
+#tooltip, #tooltip2{
+    position: fixed;
+    z-index: 20;
+    background-color: red;
+    width: 20px;
+    height: 20px;
+}
+
+#tooltip2{
+    background-color: yellow;
+} */

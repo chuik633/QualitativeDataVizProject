@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" href="intro_page/intro_styles.css" />
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://use.typekit.net/flm0jyk.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- For Sub-hero text -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script> -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>Hat DOODZ</title>
+  </head>
+
+  <body>
+    <div id="intro-page">
+      <div class="container">
+        <div class="photo-gallery"></div>
+        <div class="hero-text">
+          <h1 id="hero-rotating-text">
+            There are
+            <span style="font-weight: bold">1,000 hats</span>
+            at The Smithsonian.
+          </h1>
+        </div>
+        <div class="sub-hero-text"></div>
+        <div class="loading-bar-container">
+          <div id="loading-bar"></div>
+        </div>
+      </div>
+    </div>
+    <div class="header">
+      <h1>Hats of the Smithsonian</h1>
+      <h2>Katherine Chui & Josh Strupp</h2>
+    </div>
+    <div id="params-container">
+      <h2>Display</h2>
+      <form id="display-options">
+        <label class="radio-custom">
+          <input type="radio" name="display-options" value="reveal" checked />
+          <span class="radio-button"></span>
+          <div class="radio-value">Reveal</div>
+        </label>
+        <label class="radio-custom">
+          <input type="radio" name="display-options" value="images" />
+          <span class="radio-button"></span>
+          <div class="radio-value">Images</div>
+        </label>
+        <label class="radio-custom">
+          <input type="radio" name="display-options" value="colors" />
+          <span class="radio-button"></span>
+          <div class="radio-value">Colors</div>
+        </label>
+      </form>
+    </div>
+
+    <!-- Add the material dropdown -->
+    <select id="material-dropdown" class="material-dropdown">
+      <!-- Options will be populated dynamically -->
+    </select>
+
+    <div id="scroll-line-text"></div>
+    <div id="scroll-line"></div>
+
+    <div id="tooltip"></div>
+    <div id="tooltip2"></div>
+
+    <div id="date-label">Date Label</div>
+    <div id="timeline-container"></div>
+    <div id="timeline-bar"></div>
+    <div id="card" class="hidden"></div>
+
+    <div class="scrolly"></div>
+
+    <script src="intro_page/intro_main.js"></script>
+    <script src="main.js"></script>
+    <script src="card.js"></script>
+    <script src="timeline.js"></script>
+    <script src="image_updating.js"></script>
+    <script src="date_selection.js"></script>
+  </body>
+</html>
