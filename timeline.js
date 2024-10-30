@@ -17,7 +17,7 @@ const innerWidth = width - padding.left - padding.right;
 
 let display_mode = "reveal";
 
-function setup_color_timelines(color_data, dates) {
+function setup_color_timelines_old(color_data, dates) {
   const all_x_vals = Object.values(color_data).flatMap((d_map) =>
     Object.values(d_map).map((d) => d.x)
   );
@@ -43,9 +43,38 @@ function setup_color_timelines(color_data, dates) {
     .style("display", "inherit");
 }
 
+function setup_color_timelines(color_data, dates) {
+  const all_x_vals = Object.values(color_data).flatMap((d_map) =>
+    Object.values(d_map).map((d) => d.x)
+  );
+  const all_y_vals = Object.values(color_data).flatMap((d_map) =>
+    Object.values(d_map).map((d) => d.y)
+  );
+
+  const all_buckets = Object.keys(color_data)
+
+  const xScale = d3
+    .scaleLinear() //colorful <--> b/w (SATURATION)
+    .domain([d3.min(all_x_vals), d3.max(all_x_vals)]) //TODO: can change the min max based on all the data
+    .range([100, innerWidth - 50]);
+
+  const yScale = d3
+    .scaleLinear() //HUE
+    .domain([d3.min(all_y_vals), d3.max(all_y_vals)])
+    .range([100, innerHeight - 150]);
+
+  for (const date of all_buckets) {
+    color_timeline(color_data, date, xScale, yScale);
+  }
+  d3.select(`#timeline-${String(dates[0])}`)
+    .attr("class", "timeline-svg visible")
+    .style("display", "inherit");
+}
+
 function color_timeline(color_data, date, xScale, yScale) {
   //just look at this date to display (can modify this if we want a date range)
   let data = color_data[date];
+  console.log("DATA", data.length)
   let cap = 150;
   if (data.length > cap) {
     data = data.slice(0, cap);
@@ -81,7 +110,7 @@ function color_timeline(color_data, date, xScale, yScale) {
     .attr("transform", `translate(${padding.left}, ${padding.top})`)
     .attr("width", innerWidth)
     .attr("height", innerHeight)
-    .attr("id", `timeline-${date}`)
+    .attr("id", `timeline-${getDateBucketIdStr(date)}`)
     .attr("class", `timeline-svg hidden`)
     .style("border", "none");
   //place in the axis
@@ -124,7 +153,7 @@ function color_timeline(color_data, date, xScale, yScale) {
             .append("image")
             .attr("href", (d) => d.entry.imageUrl)
             .attr("id", (d) => String(d.entry.id))
-            .attr("class", (d) => String(d.entry.date) + " svg-image ")
+            .attr("class", (d) => "img-"+String(d.entry.date) + " svg-image ")
             .attr("data-material", (d) => d.entry.material) // Add data attribute
 
             .attr("x", (d) => d.x)
@@ -162,7 +191,7 @@ function color_timeline(color_data, date, xScale, yScale) {
             .append("rect")
             .attr("id", (d) => "color-" + String(d.entry.id))
             // .attr("class", (d) => String(d.entry.date) + " color-block")
-            .attr("class", (d) => `color-block ${d.entry.date}`)
+            .attr("class", (d) => `color-block color-${d.entry.date}`)
             .attr("data-material", (d) => d.entry.material) // Add data attribute
 
             .attr("x", (d) => d.x)

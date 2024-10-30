@@ -70,6 +70,7 @@
       // Do nothing, stay on last text
       clearInterval(heroTextInterval);
     }
+  
   }
 
   let heroTextInterval = setInterval(changeHeroText, 6000);

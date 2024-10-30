@@ -19,6 +19,7 @@ function setUpDateSelector(dates){
         .domain([dates[0], dates[dates.length-1]]) 
         .range([0, height]); 
 
+   
     //create the timeline_bar
     d3.select("#date-label").text(dates[0])
     const timeline_bar = d3.select("#timeline-bar")
@@ -47,8 +48,11 @@ function setUpDateSelector(dates){
                 .attr('height', 1)
                 .attr('y', dateToHeightScale(timeStamp))
     }
+    
+
     changeDate(dates)
 }
+
 
 function changeDate(dates){
     d3.select("#card").style('display','none').selectAll("*").remove()
@@ -80,6 +84,11 @@ function changeDate(dates){
     //get the date difference
     const date_difference = date_after - date
 
+    //select the images of the current datee
+    d3.selectAll(".img-"+String(date)).style("border", "5px solid black").attr("stroke", "black") 
+    d3.selectAll(".color-block").attr("stroke", "none") 
+    d3.selectAll(".color-"+String(date)).attr("stroke", "black") 
+    
     //shrink and scale the bars accordingly
     const barShrinkScale = d3.scalePow().exponent(.5)
         .domain([date, date + date_difference/2])
@@ -96,9 +105,23 @@ function changeDate(dates){
         exact_scrollLine.style('width',bar_length + "px")
     }
 
+    let date_bucket = getDateBucketIdStr(getDateBucket(date))
+    let bucket_start = parseInt(date_buckets[getDateBucket(date)][0])
+    let bucket_end = parseInt(date_buckets[getDateBucket(date)][1])
+
+    if(bucket_start == bucket_end){
+        bucket_end = bucket_start + 10
+    }
+    d3.select("#bucket-highlight")
+        .style("top", `${dateToHeightScale(bucket_start) +100}px`)   
+        .style('height', `${Math.abs(dateToHeightScale(bucket_end)-dateToHeightScale(bucket_start))}px`)
+
+    let date_bucket_next = getDateBucketIdStr(getDateBucket(date_after))
+
     //display the date
     d3.select("#date-label")
-        .text(date)
+        .text(getDateBucket(date))
+
     // format the bar 
     d3.selectAll('.bar')
         .attr('x', datebar_width-unselected_width)
@@ -108,6 +131,7 @@ function changeDate(dates){
         .attr('x',0)
         .attr('class', 'bar selected')
         .attr('width', datebar_width)
+
      //format the bar text
     d3.selectAll('.bar-text')
         .attr('class', 'bar-text hidden')
@@ -117,29 +141,36 @@ function changeDate(dates){
     d3.selectAll(`.timeline-svg`)
         .attr('class', 'timeline-svg hidden')
         .style('display', 'none')
-    d3.select(`#timeline-${String(date)}`)
+    d3.select(`#timeline-${String(date_bucket)}`)
         .attr('class', 'timeline-svg visible')
         .style('display', 'inherit')
 
 
-     //I only want to fade timelines if its in the final half
-     if(date_after - date_difference/3 < exact_scrollDate && exact_scrollDate < date_after){
-        //Fade out if its in the final quarter of the current selected date
-        const opacityDecScale = d3.scaleLinear()
-            .domain([date_after - date_difference/3, date_after])
-            .range([1,0])
+    //fading
+    if(date_bucket != date_bucket_next){
+        if(date_after - date_difference/6 < exact_scrollDate && exact_scrollDate < date_after){
+            //Fade out if its in the final quarter of the current selected date
+            const opacityDecScale = d3.scaleLinear()
+                .domain([date_after - date_difference/6, date_after])
+                .range([1,0])
+    
+            const fadeOutOpacity = opacityDecScale(exact_scrollDate)
+            const fadeInOpacity = 1-fadeOutOpacity
+            // tooltip_help_me_code(100, 100, `#timeline-${String(date_after)}`)
+            
+            d3.select(`#timeline-${String(date_bucket)}`).style("opacity", fadeOutOpacity)
+            d3.select(`#timeline-${String(date_bucket_next)}`)
+                .attr('class', 'timeline-svg visible')
+                .style('display', 'inherit').style("opacity", fadeInOpacity)
+        }
+        else{
+            d3.select(`#timeline-${String(date_bucket)}`).style("opacity", 1)
+        }
 
-        const fadeOutOpacity = opacityDecScale(exact_scrollDate)
-        const fadeInOpacity = 1-fadeOutOpacity
-        // tooltip_help_me_code(100, 100, `#timeline-${String(date_after)}`)
-        
-        d3.select(`#timeline-${String(date)}`).style("opacity", fadeOutOpacity)
-        d3.select(`#timeline-${String(date_after)}`)
-            .attr('class', 'timeline-svg visible')
-            .style('display', 'inherit').style("opacity", fadeInOpacity)
     }else{
-        d3.select(`#timeline-${String(date)}`).style("opacity", 1)
+        d3.select(`#timeline-${String(date_bucket)}`).style("opacity", 1)
     }
+
 
         
 

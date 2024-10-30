@@ -62,6 +62,13 @@ svg {
   background-color: #f0f0ee;
 }
 
+#bucket-highlight{
+  position: fixed;
+  width: 2px;
+  background-color: black;
+  right: 0px;
+  z-index: 12;
+}
 .timeline-svg {
   opacity: 0;
   transition: opacity 1s ease !important;

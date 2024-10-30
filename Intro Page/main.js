@@ -9,20 +9,25 @@ let currentTextIndex = 0;
 const heroRotatingTextElement = document.getElementById("hero-rotating-text");
 
 function changeHeroText() {
-  if (currentTextIndex < heroTexts.length - 1) {
-    // Fade out
-    heroRotatingTextElement.style.opacity = 0;
+  if(heroRotatingTextElement.style){
+    if (currentTextIndex < heroTexts.length - 1) {
+      // Fade out
+      
+      heroRotatingTextElement.style.opacity = 0;
+  
+      setTimeout(() => {
+        currentTextIndex++;
+        heroRotatingTextElement.textContent = heroTexts[currentTextIndex];
+        // Fade in
+        heroRotatingTextElement.style.opacity = 1;
+      }, 1000);
+    } else {
+      // Do nothing, stay on last text
+      clearInterval(heroTextInterval);
+    }
 
-    setTimeout(() => {
-      currentTextIndex++;
-      heroRotatingTextElement.textContent = heroTexts[currentTextIndex];
-      // Fade in
-      heroRotatingTextElement.style.opacity = 1;
-    }, 1000);
-  } else {
-    // Do nothing, stay on last text
-    clearInterval(heroTextInterval);
   }
+  
 }
 
 let heroTextInterval = setInterval(changeHeroText, 7000);
