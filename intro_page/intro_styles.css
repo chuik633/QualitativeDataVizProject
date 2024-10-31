@@ -157,37 +157,41 @@ html {
 
 /* New class for the "Add to Collection" button */
 .add-collection-button {
-  width: 150px;
+  width: fit-content;
+  min-width: 40px;
   height: 40px;
   border: 1px solid #000;
   background-color: #000;
   color: #fff;
   font-family: "Darker Grotesque", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
   font-weight: 300;
-  font-size: 16px;
+  font-size: 10px;
   text-align: center;
   line-height: 40px;
   cursor: pointer;
   /* Remove absolute positioning */
-  position: relative;
+  position: absolute;
   /* Center the button horizontally */
   align-self: center;
-  /* Add margin to separate from other content */
-  margin-top: 15px;
-  box-shadow: -10px 10px 0px rgba(0, 0, 0, 0.2); /* Light drop shadow */
+  top:-10px;
+  left: -10px;
+  border-radius: 50px;
 
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-bottom: 3px;
+  padding:  3px 10px ;
+  padding-bottom: 6px;
 }
 
-.add-collection-button:hover {
+/* .add-collection-button:hover {
   background-color: #fff;
   color: #000;
   transition: box-shadow 0.3s ease;
   box-shadow: none;
-}
+} */
 
 /* Collection Modal Styles */
 #collection-modal {
@@ -212,18 +216,24 @@ html {
   max-height: 80%;
   overflow-y: auto;
   position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 /* Close Button */
 .close-modal {
   color: #aaa;
   float: right;
-  font-size: 28px;
-  font-weight: bold;
+  font-size: 20px;
+  font-weight: normal;
   position: absolute;
   top: 10px;
   right: 20px;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
 }
 
 .close-modal:hover,
@@ -269,25 +279,53 @@ html {
 /* Collection Card Styles */
 .collection-card {
   border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 10px;
+  /* border-radius: 8px; */
+  padding: 20px;
   width: 200px;
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+}
+.collection-content h2{
+  color: #000;
+  font-family: "IvyOra Display";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 1.86px;
+}
+
+.collection-card:hover{
+  border: 1px solid black;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+}
+
+.collection-card:hover img{
+  border: .5px solid black;
+
 }
 
 .collection-card img {
   width: 100%;
   height: auto;
-  border-radius: 4px;
+  max-height:   100px;
+  object-fit: contain;
+  /* border-radius: 4px; */
 }
 
 .collection-card .card-title {
-  font-size: 18px;
-  margin: 10px 0 5px 0;
+  font-family: "Futura PT";
+  font-weight: 700;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.collection-card .field-text {
-  font-size: 14px;
+/* .collection-card .field-text {
+  font-size: 10px;
   color: #555;
-}
+} */

@@ -168,11 +168,10 @@ function show_card(entry, x, y) {
   });
 
   // Add "Add to Collection" button
-  const addButton = info_container
-    .append("button")
+  const addButton  = info_container.insert("button", ":first-child")
     .attr("class", "add-collection-button") // Use the new class
     .attr("aria-label", `Add ${entry.title} to Collection`)
-    .text("Add to Collection")
+    .text("+").style('font-size', "20px")
     .on("click", () => {
       // Check if the entry is already in the collection
       if (!collection.some((item) => item.id === entry.id)) {
@@ -191,9 +190,29 @@ function show_card(entry, x, y) {
         addButton.text("Already Added");
         setTimeout(() => {
           addButton.text("Add to Collection");
-        }, 2000);
+        }, 2000);i
       }
-    });
+    })
+    .on("mouseenter",()=>{
+      if(d3.select(".add-collection-button").attr('disabled')!=true){
+        // d3.select(".add-collection-button").text("+")
+        d3.select(".add-collection-button").text("Add to Collection").style('font-size', "10px")
+      }else{
+        d3.select(".add-collection-button").text("Already Added").style('font-size', "10px")
+
+      }
+    })
+    .on("mouseleave",()=>{
+      if(d3.select(".add-collection-button").attr('disabled')!=true){
+        d3.select(".add-collection-button").text("+").style('font-size', "20px")
+      }else{
+        d3.select(".add-collection-button").text("Already Added").style('font-size', "10px")
+      }
+      
+    })
+
+
+    ;
 
   // Optional: Adjust button positioning if necessary
   // You can add additional styles or classes as needed

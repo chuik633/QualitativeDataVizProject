@@ -17,31 +17,6 @@ const innerWidth = width - padding.left - padding.right;
 
 let display_mode = "reveal";
 
-function setup_color_timelines_old(color_data, dates) {
-  const all_x_vals = Object.values(color_data).flatMap((d_map) =>
-    Object.values(d_map).map((d) => d.x)
-  );
-  const all_y_vals = Object.values(color_data).flatMap((d_map) =>
-    Object.values(d_map).map((d) => d.y)
-  );
-  console.log("X", all_x_vals, all_y_vals);
-  const xScale = d3
-    .scaleLinear() //colorful <--> b/w (SATURATION)
-    .domain([d3.min(all_x_vals), d3.max(all_x_vals)]) //TODO: can change the min max based on all the data
-    .range([100, innerWidth - 50]);
-
-  const yScale = d3
-    .scaleLinear() //HUE
-    .domain([d3.min(all_y_vals), d3.max(all_y_vals)])
-    .range([100, innerHeight - 150]);
-
-  for (const date of dates) {
-    color_timeline(color_data, date, xScale, yScale);
-  }
-  d3.select(`#timeline-${String(dates[0])}`)
-    .attr("class", "timeline-svg visible")
-    .style("display", "inherit");
-}
 
 function setup_color_timelines(color_data, dates) {
   const all_x_vals = Object.values(color_data).flatMap((d_map) =>
@@ -164,7 +139,6 @@ function color_timeline(color_data, date, xScale, yScale) {
               // console.log(d)
               d3.select(`#${String(d.entry.id)}`).attr("opacity", 1);
             })
-            .on("mouseout", (event, d) => {})
             .on("mousedown", (event, d) => {
               d3.select(`#${String(d.entry.id)}`).attr("opacity", 0.3);
             })

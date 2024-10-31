@@ -85,7 +85,6 @@ function changeDate(dates){
     const date_difference = date_after - date
 
     //select the images of the current datee
-    d3.selectAll(".img-"+String(date)).style("border", "5px solid black").attr("stroke", "black") 
     d3.selectAll(".color-block").attr("stroke", "none") 
     d3.selectAll(".color-"+String(date)).attr("stroke", "black") 
     

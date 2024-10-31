@@ -262,7 +262,7 @@ svg{
 #params-container label span{
     color: #000;
     font-family: "Futura PT";
-    font-size: 8.5px;
+    font-size: 10px;
     font-weight: 100;
     letter-spacing: 0.72px;
 
@@ -301,7 +301,7 @@ label.radio-custom{
 }
 
 .radio-value{
-    font-size: 8px;
+    font-size: 10px;
     font-weight: 100;
     font-family: "Futura PT"
 }
